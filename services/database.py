@@ -9,7 +9,7 @@ cur = conn.cursor()
 def user_exists(id):
     cur.execute("SELECT * FROM player WHERE id = %s;", (id,))
 
-    # Return True if id exists, False is if doesn't exist
+    # Return True if id exists, False if id doesn't exist
     if cur.fetchone():
         return True
     else:
