@@ -1,10 +1,15 @@
 # Class containing helper method for interacting with player database
+from sql_database import database_connection
+
+# Global variables
+conn = database_connection()
+cur = conn.cursor()
 
 
 def user_exists(id):
-    conn = psycopg2.connect("dbname=something user=someone")
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM player WHERE id = %s;", (id))
+    cur.execute("SELECT * FROM player WHERE id = %s;", (id,))
+
+    # Return True if id exists, False is id doesn't exist
     if cur.fetchone():
         return True
     else:
@@ -12,5 +17,8 @@ def user_exists(id):
 
 
 def get_user(id):
-    print('return the name fo the user with the given id in the database')
-    return "Mitchell"
+    cur.execute("SELECT * FROM player WHERE id = %s", (id,))
+    data = cur.fetchone()
+
+    # Return codename
+    return data[3]
