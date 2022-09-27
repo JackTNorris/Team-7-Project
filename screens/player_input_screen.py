@@ -3,19 +3,29 @@ from tkinter.tix import COLUMN
 
 window = Tk()
 player_entry_width = 15
+
 def callback():
     print("pressed")
 
 def generate_player_entries():
-    frame1 = Frame(window)
-    frame2 = Frame(window)
 
-    frame1.grid(row=0, column=0, sticky="nsew")
-    frame2.grid(row=0, column=1, sticky="nsew")
+    frameRed = Frame(width=200, height=200, 
+    highlightbackground="red", highlightthickness=20)
+
+    frameGreen = Frame(width=100, height=100,
+    highlightbackground="green", highlightthickness=20)
+
+    frameRed.grid(row=0, column=0, sticky="e")
+    frameGreen.grid(row=0, column=1, sticky="w")
+
+    frameRed.config(bg="red")
+    frameGreen.config(bg="green")
 
     window.grid_columnconfigure(0, weight=1, uniform="group1")
     window.grid_columnconfigure(1, weight=1, uniform="group1")
     window.grid_rowconfigure(0, weight=1)
+
+    
 
     red_player_inputs = []
     green_player_inputs = []
@@ -24,8 +34,8 @@ def generate_player_entries():
         green_player_input_col = []
         for j in range(15):
             print()
-            red_player_input_col.append(Entry(frame1, width=player_entry_width))
-            green_player_input_col.append(Entry(frame2, width=player_entry_width))
+            red_player_input_col.append(Entry(frameRed, width=player_entry_width))
+            green_player_input_col.append(Entry(frameGreen, width=player_entry_width))
             red_player_input_col[j].grid(row = j, column = i)
             green_player_input_col[j].grid(row = j, column = i)
         red_player_inputs.append(red_player_input_col)
@@ -34,8 +44,8 @@ def generate_player_entries():
     return red_player_inputs, green_player_inputs
 
 def player_input_screen():
-    WIN_WIDTH = 1100
-    WIN_HEIGHT = 750
+    WIN_WIDTH = 1280
+    WIN_HEIGHT = 720
     window.geometry(f'{WIN_WIDTH}x{WIN_HEIGHT}')
 
     generate_player_entries()
