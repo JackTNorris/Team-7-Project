@@ -3,17 +3,15 @@ from tkinter.tix import COLUMN
 
 window = Tk()
 player_entry_width = 15
-
+frame_border_width = 40
 def callback():
     print("pressed")
 
 def generate_player_entries():
 
-    frameRed = Frame(width=200, height=200, 
-    highlightbackground="red", highlightthickness=20)
+    frameRed = Frame(width=200, height=200,padx=frame_border_width,pady=frame_border_width, bg="red")
 
-    frameGreen = Frame(width=100, height=100,
-    highlightbackground="green", highlightthickness=20)
+    frameGreen = Frame(width=100, height=100,padx=frame_border_width,pady=frame_border_width, bg="green")
 
     frameRed.grid(row=0, column=0, sticky="e")
     frameGreen.grid(row=0, column=1, sticky="w")
