@@ -2,6 +2,7 @@ import psycopg2
 import urllib.parse as urlparse
 import os
 
+
 def database_connection():
     database=psycopg2.connect(
             host="ec2-54-82-205-3.compute-1.amazonaws.com",
