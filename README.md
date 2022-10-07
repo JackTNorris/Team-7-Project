@@ -43,9 +43,13 @@ This guide will get you through how to get a copy of this program up and running
 1. Go to this [project's repository](https://github.com/JackTNorris/Team-7-Project).
 2. Click on the green `code` button and click `Download ZIP`.
 3. Save this .zip file in a desired location and unzip there.
-4. You should now have a folder named `Team-7-Project-main`. Open the folder and open the interior `Team-7-Project-main` folder. You should now be able to see several folders and files,
-5. Click on any empty space within the current folder and click `Open in Terminal`.
-6. Type the following inside the terminal and press enter.
+4. You should now have a folder named `Team-7-Project-main`. Open the folder and open the interior `Team-7-Project-main` folder. You should now be able to see several folders and files.
+
+## Run Program
+
+1. Go to your unzipped `Team-7-Project-main` folder. Open the folder and open the interior `Team-7-Project-main` folder. You should now be able to see several folders and files.
+2. Click on any empty space within the current folder and click `Open in Terminal`.
+3. Type the following inside the terminal and press enter.
    ```
    py main.py
    ```
