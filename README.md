@@ -41,7 +41,7 @@ This guide will get you through how to get a copy of this program up and running
 ## Installation
 
 1. Go to this [project's repository](https://github.com/JackTNorris/Team-7-Project).
-2. Click on the green `code` button and click `Download Zip`.
+2. Click on the green `code` button and click `Download ZIP`.
 3. Save this .zip file in a desired location and unzip there.
 4. You should now have a folder named `Team-7-Project-main`. Open the folder and open the interior `Team-7-Project-main` folder. You should now be able to see several folders and files,
 5. Click on any empty space within the current folder and click `Open in Terminal`.
