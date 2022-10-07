@@ -34,7 +34,7 @@ This guide will get you through how to get a copy of this program up and running
 
    Within the Command Prompt, enter the following command and press enter.
    ```
-   pip install psycopg2-binary
+   pip install psycopg2
    ```
    
 **Now that we have the necessary things installed, we can now install the source files.**
