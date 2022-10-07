@@ -54,5 +54,8 @@ This guide will get you through how to get a copy of this program up and running
    py main.py
    ```
    
+## DISCLAIMER
+
+This repository/project is still under devolopment, this README will be updated accordingly when progress is made.
 
 
