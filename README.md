@@ -3,7 +3,7 @@ Project for CSCE-3513 Software Engineering Class
 
 ## Getting Started
 
-This guide will get you through how to get a copy of this program up and running through steps.
+This guide will get you through how to get a copy of this program up and running with a few simple steps.
 
 ### Prerequisites
 Before installing any of the source code, make sure you have the following things installed.
