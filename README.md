@@ -17,18 +17,18 @@ Next, we will need to open the Command Prompt to install the following. To open 
 
 Within the Command Prompt, enter the following commands individually and press enter.
 * Pillow
-'''
+```
 pip install Pillow
-'''
+```
 
 * Tkinter
-'''
+```
 pip install tk
-'''
+```
 
 * Psycopg2
-'''
+```
 pip install psycopg2-binary
-'''
+```
 
 
