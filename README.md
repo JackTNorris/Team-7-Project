@@ -37,6 +37,7 @@ This guide will get you through how to get a copy of this program up and running
    pip install psycopg2-binary
    ```
    
+**Now that we have the necessary things installed, we can now install the source files.**
 ## Installation
 
 
