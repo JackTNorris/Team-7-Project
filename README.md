@@ -1,11 +1,11 @@
 # Team-7-Project
 Project for CSCE-3513 Software Engineering Class
 
-## Getting Started
+# Getting Started
 
 This guide will get you through how to get a copy of this program up and running with a few simple steps.
 
-### Prerequisites
+## Prerequisites
 **Before installing any of the source code, make sure you have the following things installed.**
 
 1. Python
@@ -23,7 +23,7 @@ This guide will get you through how to get a copy of this program up and running
    pip install Pillow
    ```
 
-3. Tkinter**
+3. Tkinter
 
       Within the Command Prompt, enter the following command and press enter.
       ```
@@ -36,5 +36,7 @@ This guide will get you through how to get a copy of this program up and running
    ```
    pip install psycopg2-binary
    ```
+   
+## Installation
 
 
