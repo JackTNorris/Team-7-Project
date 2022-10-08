@@ -4,7 +4,7 @@ import tkinter.messagebox as toast
 import sys,os
 from tkinter.font import Font
 sys.path.append('../')
-from services.database import user_exists, get_user
+from services.database import user_exists, get_user, add_user
 
 window = Tk()
 player_entry_width = 15
@@ -78,24 +78,45 @@ def player_input_screen():
                     return green_player_inputs[i+1][j]
         return NONE
 
+    # returns the corresponding id entry linked to a codename entry
+    def corresponding_id_entry(codename_entry):
+        for j in range(15):
+            if red_player_inputs[1][j] == codename_entry:
+                return red_player_inputs[0][j]
+            if green_player_inputs[1][j] == codename_entry:
+                return green_player_inputs[0][j]
+        return NONE
+    
     def on_focus_out(event):
+        entry_widget = event.widget
         for i in range(2):
             for j in range(15):
-                if event.widget == red_player_inputs[i][j] or event.widget == green_player_inputs[i][j]:
+                if entry_widget == red_player_inputs[i][j] or entry_widget == green_player_inputs[i][j]:
                     if  i == 0: # checking to see if a first column input
-                        entry_widget = event.widget
                         player_id = entry_widget.get()
                         if player_id.isnumeric():
                             codename_entry = next_codename_entry(entry_widget)
+                            nxt_id_entry = next_id_entry(entry_widget)
                             if user_exists(entry_widget.get()):
                                 codename = get_user(player_id)
                                 codename_entry.delete(0, END)
                                 codename_entry.insert(0, codename)
-                                
+                                if nxt_id_entry != NONE:
+                                    nxt_id_entry.focus_set()
+                            else:
+                                codename_entry.focus_set()
                         else:
-                            toast.showinfo("Invalid Input", "Enter in a number")
-                            entry_widget.delete(0, END)
-
+                            if player_id != "":
+                                toast.showinfo("Invalid Input", "Enter in a number")
+                                entry_widget.delete(0, END)
+                    if i == 1:
+                        corr_id_entry = corresponding_id_entry(entry_widget)
+                        corr_id_entry_val = corr_id_entry.get()
+                        if corr_id_entry_val == "":
+                            toast.showinfo("Invalid Op", "Must enter in id before codename")
+                        else:
+                            add_user(corr_id_entry_val, entry_widget.get())
+                            toast.showinfo("added a user")
 
     window.bind('<FocusOut>', on_focus_out)
 
