@@ -1,5 +1,5 @@
 # Class containing helper methods for interacting with player database
-from sql_database import database_connection
+from .sql_database import database_connection
 
 # Global variables
 conn = database_connection()
