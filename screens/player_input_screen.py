@@ -4,7 +4,7 @@ import tkinter.messagebox as toast
 import sys,os
 from tkinter.font import Font
 sys.path.append('../')
-from services.database import user_exists
+from services.database import user_exists, get_user
 
 window = Tk()
 player_entry_width = 15
@@ -60,7 +60,7 @@ def player_input_screen():
     window.configure(bg = "black")
     red_player_inputs, green_player_inputs = generate_player_entries()
 
-    def next_input(current):
+    def next_id_entry(current):
         for i in range(2):
             for j in range(14):
                 if red_player_inputs[i][j] == current:
@@ -69,6 +69,14 @@ def player_input_screen():
                     return green_player_inputs[i][j+1]
         return NONE
 
+    def next_codename_entry(current):
+        for i in range(1):
+            for j in range(15):
+                if red_player_inputs[i][j] == current:
+                    return red_player_inputs[i+1][j]
+                if green_player_inputs[i][j] == current:
+                    return green_player_inputs[i+1][j]
+        return NONE
 
     def on_focus_out(event):
         for i in range(2):
@@ -76,11 +84,14 @@ def player_input_screen():
                 if event.widget == red_player_inputs[i][j] or event.widget == green_player_inputs[i][j]:
                     if  i == 0: # checking to see if a first column input
                         entry_widget = event.widget
-                        if entry_widget.get().isnumeric():
+                        player_id = entry_widget.get()
+                        if player_id.isnumeric():
+                            codename_entry = next_codename_entry(entry_widget)
                             if user_exists(entry_widget.get()):
-                                toast.showinfo("user exists", "they exist")
-                                red_player_inputs[i][j+1].set_focus()
-                            print("AWESOME")
+                                codename = get_user(player_id)
+                                codename_entry.delete(0, END)
+                                codename_entry.insert(0, codename)
+                                
                         else:
                             toast.showinfo("Invalid Input", "Enter in a number")
                             entry_widget.delete(0, END)
