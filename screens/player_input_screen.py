@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.tix import COLUMN
 import tkinter.messagebox as toast
-import sys,os
+import sys
 from tkinter.font import Font
 sys.path.append('../')
 from services.database import user_exists, get_user, add_user
@@ -9,8 +9,6 @@ from services.database import user_exists, get_user, add_user
 window = Tk()
 player_entry_width = 15
 frame_border_width = 40
-def callback():
-    print("pressed")
 
 def generate_player_entries():
     frameRed = Frame(width=200, height=200,padx=frame_border_width,pady=frame_border_width, bg="red")
@@ -37,7 +35,6 @@ def generate_player_entries():
         red_player_input_col = []
         green_player_input_col = []
         for j in range(1, 16):
-            print()
             red_player_input_col.append(Entry(frameRed, width=player_entry_width))
             green_player_input_col.append(Entry(frameGreen, width=player_entry_width))
             red_player_input_col[j-1].grid(row = j, column = i)
@@ -112,17 +109,15 @@ def player_input_screen():
                     if i == 1:
                         corr_id_entry = corresponding_id_entry(entry_widget)
                         corr_id_entry_val = corr_id_entry.get()
-                        if corr_id_entry_val == "":
+                        if corr_id_entry_val == "" and entry_widget.get() != "":
                             toast.showinfo("Invalid Op", "Must enter in id before codename")
+                            entry_widget.delete(0, END)
                         else:
                             add_user(corr_id_entry_val, entry_widget.get())
-                            toast.showinfo("added a user")
+                            next_id_entry(corr_id_entry).focus_set()
 
     window.bind('<FocusOut>', on_focus_out)
-
     window.mainloop()
-
-    entry= Entry(window, width= 40)
 
 if __name__ == '__main__':
     player_input_screen()
