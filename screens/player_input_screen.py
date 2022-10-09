@@ -6,47 +6,11 @@ from tkinter.font import Font
 sys.path.append('../')
 from services.database import user_exists, get_user, add_user
 
-window = Tk()
 player_entry_width = 15
-frame_border_width = 40
-
-def generate_player_entries():
-    frameRed = Frame(width=200, height=200,padx=frame_border_width,pady=frame_border_width, bg="red")
-
-    frameGreen = Frame(width=100, height=100,padx=frame_border_width,pady=frame_border_width, bg="green")
-
-    
-    frameRed.grid(row=0, column=0, sticky="e")
-    frameGreen.grid(row=0, column=1, sticky="w")
-
-    frameRed.config(bg="red")
-    frameGreen.config(bg="green")
-    Label(frameRed, text="Red Team", bg="red", fg="white").grid(row=0, column=0)
-    Label(frameGreen, text="Green Team", bg="green", fg="white").grid(row = 0, column=0)
-    window.grid_columnconfigure(0, weight=1, uniform="group1")
-    window.grid_columnconfigure(1, weight=1, uniform="group1")
-    window.grid_rowconfigure(0, weight=1)
-
-    
-
-    red_player_inputs = []
-    green_player_inputs = []
-    for i in range(1, 3):
-        red_player_input_col = []
-        green_player_input_col = []
-        for j in range(1, 16):
-            red_player_input_col.append(Entry(frameRed, width=player_entry_width))
-            green_player_input_col.append(Entry(frameGreen, width=player_entry_width))
-            red_player_input_col[j-1].grid(row = j, column = i)
-            green_player_input_col[j-1].grid(row = j, column = i)
-            Label(frameRed, text=j, bg="red").grid(row=j, column=0)
-            Label(frameGreen, text=j, bg="green").grid(row = j, column=0)
-        red_player_inputs.append(red_player_input_col)
-        green_player_inputs.append(green_player_input_col)
-    red_player_inputs[0][0].focus_set()
-    return red_player_inputs, green_player_inputs    
+frame_border_width = 40   
 
 def player_input_screen():
+    window = Tk()
     WIN_WIDTH = 1280
     WIN_HEIGHT = 720
     window.geometry(f'{WIN_WIDTH}x{WIN_HEIGHT}')
@@ -55,6 +19,43 @@ def player_input_screen():
     head_label = Label(window, text="Edit Current Game",font=helvetica20, fg="white", bg="black")
     head_label.place(x=575, y=0)
     window.configure(bg = "black")
+
+    def generate_player_entries():
+        frameRed = Frame(width=200, height=200,padx=frame_border_width,pady=frame_border_width, bg="red")
+
+        frameGreen = Frame(width=100, height=100,padx=frame_border_width,pady=frame_border_width, bg="green")
+
+        
+        frameRed.grid(row=0, column=0, sticky="e")
+        frameGreen.grid(row=0, column=1, sticky="w")
+
+        frameRed.config(bg="red")
+        frameGreen.config(bg="green")
+        Label(frameRed, text="Red Team", bg="red", fg="white").grid(row=0, column=0)
+        Label(frameGreen, text="Green Team", bg="green", fg="white").grid(row = 0, column=0)
+        window.grid_columnconfigure(0, weight=1, uniform="group1")
+        window.grid_columnconfigure(1, weight=1, uniform="group1")
+        window.grid_rowconfigure(0, weight=1)
+
+        
+
+        red_player_inputs = []
+        green_player_inputs = []
+        for i in range(1, 3):
+            red_player_input_col = []
+            green_player_input_col = []
+            for j in range(1, 16):
+                red_player_input_col.append(Entry(frameRed, width=player_entry_width))
+                green_player_input_col.append(Entry(frameGreen, width=player_entry_width))
+                red_player_input_col[j-1].grid(row = j, column = i)
+                green_player_input_col[j-1].grid(row = j, column = i)
+                Label(frameRed, text=j, bg="red").grid(row=j, column=0)
+                Label(frameGreen, text=j, bg="green").grid(row = j, column=0)
+            red_player_inputs.append(red_player_input_col)
+            green_player_inputs.append(green_player_input_col)
+        red_player_inputs[0][0].focus_set()
+        return red_player_inputs, green_player_inputs 
+    
     red_player_inputs, green_player_inputs = generate_player_entries()
 
     def next_id_entry(current):
