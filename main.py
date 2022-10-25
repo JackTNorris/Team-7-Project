@@ -7,4 +7,5 @@ from splash_screen import splash_screen
 #run splash screen
 
 splash_screen()
-player_input_screen()
+players = player_input_screen()
+print(players)
