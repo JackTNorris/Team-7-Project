@@ -125,6 +125,8 @@ def player_input_screen():
 
     window.bind('<FocusOut>', on_focus_out)
 
+    window.after("<f5>", window.destroy)
+
     window.mainloop()
     
     return {
