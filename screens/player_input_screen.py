@@ -19,6 +19,8 @@ def player_input_screen():
     head_label = Label(window, text="Edit Current Game",font=helvetica20, fg="white", bg="black")
     head_label.place(x=575, y=0)
     window.configure(bg = "black")
+    red_users = []
+    green_users = []
 
     def generate_player_entries():
         frameRed = Frame(width=200, height=200,padx=frame_border_width,pady=frame_border_width, bg="red")
@@ -97,6 +99,10 @@ def player_input_screen():
                             nxt_id_entry = next_id_entry(entry_widget)
                             if user_exists(entry_widget.get()):
                                 codename = get_user(player_id)
+                                if entry_widget == red_player_inputs[i][j]:
+                                    red_users.append({"id": player_id, "codename": codename})
+                                if entry_widget == green_player_inputs[i][j]:
+                                    green_users.append({"id": player_id, "codename": codename})
                                 codename_entry.delete(0, END)
                                 codename_entry.insert(0, codename)
                                 if nxt_id_entry != NONE:
@@ -119,6 +125,10 @@ def player_input_screen():
 
     window.bind('<FocusOut>', on_focus_out)
     window.mainloop()
-
+    
+    return {
+        "red_users": red_users,
+        "green_users": green_users
+    }
 if __name__ == '__main__':
     player_input_screen()
