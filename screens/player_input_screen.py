@@ -124,6 +124,7 @@ def player_input_screen():
                             next_id_entry(corr_id_entry).focus_set()
 
     window.bind('<FocusOut>', on_focus_out)
+
     window.mainloop()
     
     return {
