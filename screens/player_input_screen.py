@@ -7,7 +7,7 @@ sys.path.append('../')
 from services.database import user_exists, get_user, add_user
 
 player_entry_width = 15
-frame_border_width = 40   
+frame_border_width = 40
 
 def player_input_screen():
     window = Tk()
@@ -123,12 +123,15 @@ def player_input_screen():
                             add_user(corr_id_entry_val, entry_widget.get())
                             next_id_entry(corr_id_entry).focus_set()
 
+    def close_window(e):
+        window.destroy()
+
     window.bind('<FocusOut>', on_focus_out)
 
-    window.after("<f5>", window.destroy)
+    window.bind("<F5>", lambda e: close_window(e))
 
     window.mainloop()
-    
+
     return {
         "red_users": red_users,
         "green_users": green_users
