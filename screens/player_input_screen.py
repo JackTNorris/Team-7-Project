@@ -18,6 +18,8 @@ def player_input_screen():
     helvetica20 = Font(family='Helvetica', size=20, weight='bold')
     head_label = Label(window, text="Edit Current Game",font=helvetica20, fg="white", bg="black")
     head_label.place(x=575, y=0)
+    head_label = Label(window, text="Press F5 to Quit",font=helvetica20, fg="white", bg="black")
+    head_label.place(x=575, y=660)
     window.configure(bg = "black")
     red_users = []
     green_users = []
