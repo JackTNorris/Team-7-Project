@@ -128,7 +128,7 @@ def player_input_screen():
 
     window.bind('<FocusOut>', on_focus_out)
 
-    window.bind("<F5>", lambda e: close_window(e))
+    window.bind('<F5>', lambda e: close_window(e))
 
     window.mainloop()
 
@@ -136,5 +136,7 @@ def player_input_screen():
         "red_users": red_users,
         "green_users": green_users
     }
+
+
 if __name__ == '__main__':
     player_input_screen()
