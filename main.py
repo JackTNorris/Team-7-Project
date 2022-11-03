@@ -13,7 +13,6 @@ splash_screen()
 players = player_input_screen()
 countdown_timer_screen()
 
-players = {'red_users': [{'id': '1', 'codename': 'Opus'}], 'green_users': [{'id': '4', 'codename': 'kkk'}]}
 player_action_screen(players)
 #tempororary for hector and gideon
 
