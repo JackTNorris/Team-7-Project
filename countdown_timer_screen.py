@@ -13,30 +13,26 @@ def countdown_timer_screen():
     window.geometry("1280x720")
     window.configure(background='grey')
 
-    path = "Aaron.jpg"
-    # window.state('zoomed')
-    width =   1280 #int(window.winfo_width()) #
-    height =  720 #int(window.winfo_height()) #
+    #Number of seconds for countdown
+    countdown_seconds = 3
 
     #Configure the background
-    window.config(bg='burlywood1')
-    #Create Entry Widgets for SS
-    seconds = StringVar()
-    Entry(window, textvariable=seconds, width = 2, font = 'Helvetica 14').place(x=220, y=120)
-    seconds.set('30')
+    window.config(bg='black')
 
-    #Start the GUI
+    #Create widgets for timer
+    seconds = StringVar()
+    Label(window, textvariable=seconds, width = 2, font = 'Helvetica 50', bg='black', fg="red").place(x=600, y=300)
+    seconds.set(countdown_seconds)
     
-    times = 30
-    while times > -1:
+    while countdown_seconds > -1 and window.winfo_exists():
         #Update the time
         window.update()
         time.sleep(1)
-        times -= 1
-        seconds.set(times)
+        countdown_seconds -= 1
+        seconds.set(countdown_seconds)
 
-    Label(window, font =('Helvetica bold',22), text = 'Set the Timer',bg ='burlywood1').place(x=105,y=70)
-    Button(window, text='START', bd ='2', bg = 'IndianRed1',font =('Helveticabold',10), command = countdowntimer).place(x=167, y=165)
+    if countdown_seconds < 0:
+        window.destroy()
     window.mainloop()
 
 if __name__ == '__main__':
