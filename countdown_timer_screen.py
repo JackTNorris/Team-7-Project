@@ -14,7 +14,7 @@ def countdown_timer_screen():
     window.configure(background='grey')
 
     #Number of seconds for countdown
-    countdown_seconds = 3
+    countdown_seconds = 30
 
     #Configure the background
     window.config(bg='black')
