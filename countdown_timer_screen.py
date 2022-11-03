@@ -1,5 +1,6 @@
 from pathlib import Path
 import tkinter as tk
+import time
 from tkinter import *
 from tokenize import Double
 
@@ -12,24 +13,27 @@ def countdown_timer_screen():
     window.geometry("1280x720")
     window.configure(background='grey')
 
-    path = "Aaron.jpg"
-    # window.state('zoomed')
-    width =   1280 #int(window.winfo_width()) #
-    height =  720 #int(window.winfo_height()) #
+    #Number of seconds for countdown
+    countdown_seconds = 30
 
-    #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-    img = ImageTk.PhotoImage(Image.open("splash_screen.jpeg").resize((width, height)))
-    #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
-    panel = tk.Label(window, image = img)
+    #Configure the background
+    window.config(bg='black')
 
-    #The Pack geometry manager packs widgets in rows or columns.
-    panel.pack(side = "bottom", fill = "both", expand = "yes")
+    #Create widgets for timer
+    seconds = StringVar()
+    Label(window, textvariable=seconds, width = 2, font = 'Helvetica 50', bg='black', fg="red").place(x=600, y=300)
+    seconds.set(countdown_seconds)
+    
+    while countdown_seconds > -1 and window.winfo_exists():
+        #Update the time
+        window.update()
+        time.sleep(1)
+        countdown_seconds -= 1
+        seconds.set(countdown_seconds)
 
-    #Start the GUI
-    window.after(3000, window.destroy)
-
+    if countdown_seconds < 0:
+        window.destroy()
     window.mainloop()
-
 
 if __name__ == '__main__':
     countdown_timer_screen()
