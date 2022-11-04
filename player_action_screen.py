@@ -24,14 +24,26 @@ def player_action_screen(players):
     
     frameRed = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="black")
     frameGreen = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="black")
+    frameTimer = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="black")
+    frameEventBoxLeft = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="white")
+    frameEventBoxCenter = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="white")
+    frameEventBoxRight = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="white")
+
     frameRed.grid(row=0, column=0, sticky="nsew")
     frameGreen.grid(row=0, column=2, sticky="nsew")
+    frameTimer.grid(row=0, column=1, sticky="nsew")
+    frameEventBoxLeft.grid(row=1, column=0, sticky="nsew")
+    frameEventBoxCenter.grid(row=1, column=1, sticky="nsew")
+    frameEventBoxRight.grid(row=1, column=2, sticky="nsew")
     
-    frameRed.config(bg="black")
-    frameGreen.config(bg="black")
+    frameRed.config(bg="grey")
+    frameGreen.config(bg="grey")
 
     Label(frameRed, text="RED TEAM", bg="black", font=helveticaBig, fg="red").grid(row=0, column=0, sticky="e")
     Label(frameGreen, text="GREEN TEAM", bg="black", font=helveticaBig, fg="green").grid(row=0, column=0, sticky="w")
+    Label(frameTimer, text="INSERT TIMER HERE", bg="grey", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
+    Label(frameEventBoxCenter, text="EVENT WINDOW", bg="white", font=helveticaBig, fg="black").grid(row=0, column=1, sticky="n")
+
 
     window.grid_columnconfigure(0, weight=1, uniform="group1")
     window.grid_columnconfigure(1, weight=1, uniform="group1")
