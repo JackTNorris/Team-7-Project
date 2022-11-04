@@ -13,36 +13,6 @@ splash_screen()
 players = player_input_screen()
 countdown_timer_screen()
 
-
-players = {'red_users': [{'id': '1', 'codename': 'Opus'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},], 
-            'green_users': [{'id': '1', 'codename': 'Bartholomew'},
-                         {'id': '2', 'codename': 'Cornelius'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},
-                         {'id': '2', 'codename': 'Helga'},] }
-
 player_action_screen(players)
 #tempororary for hector and gideon
 
