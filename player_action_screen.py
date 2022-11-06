@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import *
 from tokenize import Double
 from tkinter.font import Font
-
+import time
 from PIL import ImageTk, Image
 
 player_border_width = 10
@@ -21,13 +21,17 @@ def player_action_screen(players):
     
     window.configure(bg = "black")
 
+    player_frame_heights = 720 / 2
+    player_frame_widths = 1280 / 3
     
-    frameRed = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="black")
-    frameGreen = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="black")
-    frameTimer = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="black")
-    frameEventBoxLeft = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="white")
-    frameEventBoxCenter = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="white")
-    frameEventBoxRight = Frame(width=300, height=300,padx=frame_border_width,pady=frame_border_width, bg="white")
+    warning_timer_seconds = 60 * 6
+
+    frameRed = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
+    frameGreen = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
+    frameTimer = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
+    frameEventBoxLeft = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black")
+    frameEventBoxCenter = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black")
+    frameEventBoxRight = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black")
 
     frameRed.grid(row=0, column=0, sticky="nsew")
     frameGreen.grid(row=0, column=2, sticky="nsew")
@@ -36,13 +40,12 @@ def player_action_screen(players):
     frameEventBoxCenter.grid(row=1, column=1, sticky="nsew")
     frameEventBoxRight.grid(row=1, column=2, sticky="nsew")
     
-    frameRed.config(bg="grey")
-    frameGreen.config(bg="grey")
+    # frameRed.config(bg="grey")
+    # frameGreen.config(bg="grey")
 
     Label(frameRed, text="RED TEAM", bg="black", font=helveticaBig, fg="red").grid(row=0, column=0, sticky="e")
     Label(frameGreen, text="GREEN TEAM", bg="black", font=helveticaBig, fg="green").grid(row=0, column=0, sticky="w")
-    Label(frameTimer, text="INSERT TIMER HERE", bg="grey", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
-    Label(frameEventBoxCenter, text="EVENT WINDOW", bg="white", font=helveticaBig, fg="black").grid(row=0, column=1, sticky="n")
+    Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
 
 
     window.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -84,9 +87,26 @@ def player_action_screen(players):
             
     #'''
 
+    seconds = StringVar()
+    Label(frameTimer, textvariable=seconds, bg="black", font="Helvetica 50", fg="white").grid(row=0, column=1, sticky="n")
+    seconds.set(get_minute_second_string(warning_timer_seconds))
+    
 
+    while warning_timer_seconds > -1 and window.winfo_exists():
+        #Update the time
+        window.update()
+        time.sleep(1)
+        warning_timer_seconds -= 1
+        seconds.set(get_minute_second_string(warning_timer_seconds))
+
+    if warning_timer_seconds < 0:
+        window.destroy()
+    window.mainloop()
 
     window.mainloop()
+
+def get_minute_second_string(seconds):
+    return  (str(int(seconds / 60)) if seconds / 60 > 0 else "00") + ":" + (str(int(seconds % 60)) if seconds % 60 > 0 else "00")
 
 if __name__ == '__main__':
     player_action_screen()
