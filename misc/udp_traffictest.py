@@ -10,13 +10,19 @@ print('this program will generate some test traffic for 2 players on the red ')
 print('team as well as 2 players on the green team')
 print('')
 
-red1 = input('Enter id of red player 1 ==> ')
-red2 = input('Enter id of red player 2 ==> ')
-green1 = input('Enter id of green player 1 ==> ')
-green2 = input('Enter id of green player 2 ==> ')
+#red1 = input('Enter id of red player 1 ==> ')
+#red2 = input('Enter id of red player 2 ==> ')
+#green1 = input('Enter id of green player 1 ==> ')
+#green2 = input('Enter id of green player 2 ==> ')
 
-print('')
-counter = input('How many events do you want ==> ')
+red1 = '1'
+red2 = '2'
+green1 = '3'
+green2 = '4'
+
+#print('')
+#counter = input('How many events do you want ==> ')
+counter = 20
 
 # Create datagram socket
 UDPClientSocketTransmit = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
@@ -40,7 +46,7 @@ while i < int(counter):
 		message = greenplayer + ":" + redplayer
 
 	print(message)
-	i+=1;
+	i+=1
 	UDPClientSocketTransmit.sendto(str.encode(str(message)), serverAddressPort)
 	time.sleep(random.randint(1,3))
 	
