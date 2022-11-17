@@ -106,7 +106,29 @@ def player_action_screen(players):
     window.mainloop()
 
 def get_minute_second_string(seconds):
-    return  (str(int(seconds / 60)) if seconds / 60 > 0 else "00") + ":" + (str(int(seconds % 60)) if seconds % 60 > 0 else "00")
+    #default to 00
+    seconds_text = "00" 
+    minutes_text = "00"
+
+    #if single digit second value
+    if seconds % 60 < 10:
+        seconds_text = "0" + str(seconds % 60)
+    
+    #if double digit second value
+    elif seconds % 60 > 0:
+        seconds_text = str(seconds % 60)
+
+
+    #if single digit second value
+    if seconds / 60 < 10:
+        minutes_text = "0" + str(int(seconds / 60))
+    
+    #if double digit second value
+    elif seconds / 60 > 0:
+        minutes_text = str(int(seconds / 60))
+
+
+    return  minutes_text + ":" + seconds_text
 
 if __name__ == '__main__':
     player_action_screen()
