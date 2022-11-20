@@ -4,9 +4,6 @@ from tkinter import *
 from tokenize import Double
 from tkinter.font import Font
 import time
-import threading
-import queue
-from misc.udp_cli import read_socket
 from PIL import ImageTk, Image
 
 player_border_width = 10
