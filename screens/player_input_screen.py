@@ -93,9 +93,9 @@ def player_input_screen():
         entry_widget = event.widget
         for i in range(2):
             for j in range(15):
-                if entry_widget == red_player_inputs[i][j] or entry_widget == green_player_inputs[i][j]:
+                if entry_widget == red_player_inputs[i][j] or entry_widget == green_player_inputs[i][j]: #checking to see if filled in user input
+                    player_id = entry_widget.get()
                     if  i == 0: # checking to see if a first column input
-                        player_id = entry_widget.get()
                         if player_id.isnumeric():
                             codename_entry = next_codename_entry(entry_widget)
                             nxt_id_entry = next_id_entry(entry_widget)
@@ -115,13 +115,18 @@ def player_input_screen():
                             if player_id != "":
                                 toast.showinfo("Invalid Input", "Enter in a number")
                                 entry_widget.delete(0, END)
-                    if i == 1:
+                    if i == 1: # second column input for name
                         corr_id_entry = corresponding_id_entry(entry_widget)
                         corr_id_entry_val = corr_id_entry.get()
                         if corr_id_entry_val == "" and entry_widget.get() != "":
                             toast.showinfo("Invalid Op", "Must enter in id before codename")
                             entry_widget.delete(0, END)
                         else:
+                            codename = entry_widget.get()
+                            if entry_widget == red_player_inputs[i][j]:
+                                red_users.append({"id": player_id, "codename": codename})
+                            if entry_widget == green_player_inputs[i][j]:
+                                green_users.append({"id": player_id, "codename": codename})                           
                             add_user(corr_id_entry_val, entry_widget.get())
                             next_id_entry(corr_id_entry).focus_set()
 
