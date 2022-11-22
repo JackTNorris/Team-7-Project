@@ -1,11 +1,12 @@
+import sys
+import tkinter.messagebox as toast
 from tkinter import *
 from tkinter.tix import COLUMN
-import tkinter.messagebox as toast
-import sys
 from tkinter.font import Font
-sys.path.append('../')
 from services.database import user_exists, get_user, add_user
 
+
+sys.path.append('../')
 player_entry_width = 15
 frame_border_width = 40
 

@@ -1,8 +1,7 @@
-from pathlib import Path
 import tkinter as tk
+from pathlib import Path
 from tkinter import *
 from tokenize import Double
-
 from PIL import ImageTk, Image
 
 #This creates the main window of an application
@@ -18,7 +17,7 @@ def splash_screen():
     height =  720 #int(window.winfo_height()) #
 
     #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-    img = ImageTk.PhotoImage(Image.open("splash_screen.jpeg").resize((width, height)))
+    img = ImageTk.PhotoImage(Image.open("assets/splash_screen.jpeg").resize((width, height)))
     #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
     panel = tk.Label(window, image = img)
 
