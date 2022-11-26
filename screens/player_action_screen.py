@@ -5,13 +5,16 @@ from tkinter import *
 from tokenize import Double
 from tkinter.font import Font
 from PIL import ImageTk, Image
-
+import threading
 
 player_border_width = 10
 frame_border_width = 20
+warning_timer_seconds = 6 * 60
 
 #This creates the main window of an application
 def player_action_screen(players):
+    timer_lock = threading.Lock()
+    global warning_timer_seconds
     window = Tk()
     window.title("Join")
     window.geometry("1280x720")
@@ -25,8 +28,6 @@ def player_action_screen(players):
     player_frame_heights = 720 / 2
     player_frame_widths = 1280 / 3
     
-    warning_timer_seconds = 60 * 6
-
     frameRed = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
     frameGreen = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
     frameTimer = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
@@ -86,25 +87,18 @@ def player_action_screen(players):
 
             print('   >player: ', playerName)
             
-    #'''
-
     seconds = StringVar()
     Label(frameTimer, textvariable=seconds, bg="black", font="Helvetica 50", fg="white").grid(row=0, column=1, sticky="n")
     seconds.set(get_minute_second_string(warning_timer_seconds))
+
+    timer_thread = threading.Thread(target=increment_timer, args=(seconds,))
+    timer_thread.start()
+
+    window.after((warning_timer_seconds + 1) * 1000, window.destroy)
     
-
-    while warning_timer_seconds > -1 and window.winfo_exists():
-        #Update the time
-        window.update()
-        time.sleep(1)
-        warning_timer_seconds -= 1
-        seconds.set(get_minute_second_string(warning_timer_seconds))
-
-    if warning_timer_seconds < 0:
-        window.destroy()
     window.mainloop()
 
-    window.mainloop()
+    timer_thread.join()
 
 def get_minute_second_string(seconds):
     #default to 00
@@ -130,6 +124,14 @@ def get_minute_second_string(seconds):
 
 
     return  minutes_text + ":" + seconds_text
+
+def increment_timer(seconds):
+    global warning_timer_seconds
+    while warning_timer_seconds > -1:
+        time.sleep(1)
+        warning_timer_seconds -= 1
+        if warning_timer_seconds > -1:
+            seconds.set(get_minute_second_string(warning_timer_seconds))
 
 if __name__ == '__main__':
     player_action_screen()
