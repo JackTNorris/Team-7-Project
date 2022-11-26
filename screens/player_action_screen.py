@@ -92,9 +92,23 @@ def player_action_screen(players, event_queue):
     timer_thread = threading.Thread(target=increment_timer, args=(seconds,))
     timer_thread.start()
 
-    def add_events_to_window(event_string):
-        print("put code here for adding events to window")
+    event_list = []
 
+    def add_events_to_window(event_string):
+        event_list.append(event_string)
+        for widget in frameEventBoxCenter.winfo_children():
+            widget.destroy()
+        Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0 , column=1, sticky="n")
+        
+        # adjust the size of the event_list based on overflow
+        if len(event_list) > 3:
+            event_list.clear()
+
+        #render the labels for each of the events based on the items in event_list
+
+        window.update()
+        
+    
     def listen_for_events(q):
         while True:
             #splitting "4:1" into "[4, 1]"
