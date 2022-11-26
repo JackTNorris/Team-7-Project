@@ -22,10 +22,6 @@ def fetch_traffic(q, sock):
         # Update the queue with the message
         q.put(d_msg)
 
-        # TODO: Delete this
-        # Temporary print statement to show that the queue is being updated
-        print(list(q.queue))
-
         # Sending a reply to client
         sock.sendto(bytesToSend, address)
 

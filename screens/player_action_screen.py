@@ -5,13 +5,16 @@ from tkinter import *
 from tokenize import Double
 from tkinter.font import Font
 from PIL import ImageTk, Image
+import threading
 
 
 player_border_width = 10
 frame_border_width = 20
+warning_timer_seconds = 6 * 60
 
 #This creates the main window of an application
-def player_action_screen(players):
+def player_action_screen(players, event_queue):
+    global warning_timer_seconds
     window = Tk()
     window.title("Join")
     window.geometry("1280x720")
@@ -25,8 +28,6 @@ def player_action_screen(players):
     player_frame_heights = 720 / 2
     player_frame_widths = 1280 / 3
     
-    warning_timer_seconds = 60 * 6
-
     frameRed = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
     frameGreen = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
     frameTimer = Frame(width=player_frame_widths, height=player_frame_heights,padx=frame_border_width,pady=frame_border_width, bg="black", highlightbackground="blue", highlightcolor="blue", highlightthickness="2")
@@ -40,9 +41,6 @@ def player_action_screen(players):
     frameEventBoxLeft.grid(row=1, column=0, sticky="nsew")
     frameEventBoxCenter.grid(row=1, column=1, sticky="nsew")
     frameEventBoxRight.grid(row=1, column=2, sticky="nsew")
-    
-    # frameRed.config(bg="grey")
-    # frameGreen.config(bg="grey")
 
     Label(frameRed, text="RED TEAM", bg="black", font=helveticaBig, fg="red").grid(row=0, column=0, sticky="e")
     Label(frameGreen, text="GREEN TEAM", bg="black", font=helveticaBig, fg="green").grid(row=0, column=0, sticky="w")
@@ -86,25 +84,60 @@ def player_action_screen(players):
 
             print('   >player: ', playerName)
             
-    #'''
-
     seconds = StringVar()
     Label(frameTimer, textvariable=seconds, bg="black", font="Helvetica 50", fg="white").grid(row=0, column=1, sticky="n")
     seconds.set(get_minute_second_string(warning_timer_seconds))
-    
 
-    while warning_timer_seconds > -1 and window.winfo_exists():
-        #Update the time
+    # seperate thread for timer. updating seconds widget triggers event to update window
+    timer_thread = threading.Thread(target=increment_timer, args=(seconds,))
+    timer_thread.start()
+
+    event_list = []
+
+    def add_events_to_window(event_string):
+        event_list.append(event_string)
+        for widget in frameEventBoxCenter.winfo_children():
+            widget.destroy()
+        Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0 , column=1, sticky="n")
+        
+        # adjust the size of the event_list based on overflow
+        if len(event_list) > 3:
+            event_list.clear()
+
+        #render the labels for each of the events based on the items in event_list
+
         window.update()
-        time.sleep(1)
-        warning_timer_seconds -= 1
-        seconds.set(get_minute_second_string(warning_timer_seconds))
+        
+    
+    def listen_for_events(q):
+        while True:
+            #splitting "4:1" into "[4, 1]"
+            event_data = q.get().split(":")
 
-    if warning_timer_seconds < 0:
-        window.destroy()
+            #getting array of all players to search through
+            all_players = players["red_users"] + players["green_users"]
+
+            #filtering all_players for items with selected id, then selecting codename   
+            codename_one = list(filter(lambda player: str(player["id"]) == event_data[0], all_players))[0]["codename"]
+            codename_two = list(filter(lambda player: str(player["id"]) == event_data[1], all_players))[0]["codename"]
+
+            event_string = codename_one + " hit " + codename_two
+
+            #TODO: Remove this when you're adding the events to the screen
+            print(event_string)
+
+            add_events_to_window(event_string)
+            q.task_done()
+
+    event_listener_thread = threading.Thread(target=listen_for_events, args=(event_queue,))
+    event_listener_thread.start()
+    # close the window after the timer has expired
+    window.after((warning_timer_seconds + 1) * 1000, window.destroy)
+    
     window.mainloop()
 
-    window.mainloop()
+    timer_thread.join()
+    event_listener_thread.join()
 
 def get_minute_second_string(seconds):
     #default to 00
@@ -130,6 +163,14 @@ def get_minute_second_string(seconds):
 
 
     return  minutes_text + ":" + seconds_text
+
+def increment_timer(seconds):
+    global warning_timer_seconds
+    while warning_timer_seconds > -1:
+        time.sleep(1)
+        warning_timer_seconds -= 1
+        if warning_timer_seconds > -1:
+            seconds.set(get_minute_second_string(warning_timer_seconds))
 
 if __name__ == '__main__':
     player_action_screen()
