@@ -1,9 +1,10 @@
-from screens.player_input_screen import player_input_screen
-from splash_screen import splash_screen
-from countdown_timer_screen import countdown_timer_screen
-from player_action_screen import player_action_screen
-from services.udp_serv import run_udp_thread, start_server
 from queue import Queue
+from screens.player_input_screen import player_input_screen
+from screens.splash_screen import splash_screen
+from screens.countdown_timer_screen import countdown_timer_screen
+from screens.player_action_screen import player_action_screen
+from services.udp_serv import run_udp_thread, start_server
+
 
 # This will be the entry point of our application
 

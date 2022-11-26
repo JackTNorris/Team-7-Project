@@ -1,5 +1,5 @@
 # Class containing helper methods for interacting with player database
-from .sql_database import database_connection
+from services.sql_database import database_connection
 
 
 def user_exists(id):

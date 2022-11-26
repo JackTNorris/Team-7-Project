@@ -1,10 +1,11 @@
-from pathlib import Path
+import time
 import tkinter as tk
+from pathlib import Path
 from tkinter import *
 from tokenize import Double
 from tkinter.font import Font
-import time
 from PIL import ImageTk, Image
+
 
 player_border_width = 10
 frame_border_width = 20

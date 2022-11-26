@@ -1,6 +1,6 @@
+import os
 import psycopg2
 import urllib.parse as urlparse
-import os
 
 
 def database_connection():
