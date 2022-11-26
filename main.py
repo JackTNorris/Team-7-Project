@@ -20,4 +20,4 @@ q = Queue()
 sock = start_server()
 run_udp_thread(q, sock)
 
-player_action_screen(players)
+player_action_screen(players, q)
