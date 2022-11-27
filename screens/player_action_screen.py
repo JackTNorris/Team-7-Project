@@ -98,14 +98,31 @@ def player_action_screen(players, event_queue):
         event_list.append(event_string)
         for widget in frameEventBoxCenter.winfo_children():
             widget.destroy()
-        Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0 , column=1, sticky="n")
+        Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
         
         # adjust the size of the event_list based on overflow
-        if len(event_list) > 3:
+        if len(event_list) > 15:    
             event_list.clear()
 
         #render the labels for each of the events based on the items in event_list
+        for i in range(len(event_list)):
+            for team in players:
+                for player in players[team]:
+                    playerName = player['codename']
+                    if team == 'red_users':    
+                        # check if name exists in team
+                        if playerName == (event_list[i].split(" "))[0]:
+                            Label(frameEventBoxLeft, text=event_list[i], bg="black", font=helveticaBig, fg="red").grid(row=i, column=1, sticky='n')
 
+        for i in range(len(event_list)):
+            for team in players:
+                for player in players[team]:
+                    playerName = player['codename']
+                    if team == 'green_users':    
+                        # check if name exists in team
+                        if playerName == (event_list[i].split(" "))[0]:
+                            Label(frameEventBoxRight, text=event_list[i], bg="black", font=helveticaBig, fg="green").grid(row=i, column=1, sticky='n')
+                            
         window.update()
         
     
