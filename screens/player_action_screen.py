@@ -111,10 +111,6 @@ def player_action_screen(players, event_queue):
         # adjust the size of the event_list based on overflow
         if len(event_list) > 8:    
             event_list.pop(0)
-
-        # maxSize = 5
-        # redLabels = []
-        # greenLabels = []
         
         ## render the labels for each of the events based on the items in event_list
         for i in range(len(event_list)):
@@ -138,7 +134,6 @@ def player_action_screen(players, event_queue):
             codename_two = list(filter(lambda player: str(player["id"]) == event_data[1], all_players))[0]["codename"]
             
             #point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
-
 
             event_string = codename_one + " hit " + codename_two
 
