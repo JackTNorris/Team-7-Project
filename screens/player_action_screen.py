@@ -44,7 +44,15 @@ def player_action_screen(players, event_queue):
 
     Label(frameRed, text="RED TEAM", bg="black", font=helveticaBig, fg="red").grid(row=0, column=0, sticky="e")
     Label(frameGreen, text="GREEN TEAM", bg="black", font=helveticaBig, fg="green").grid(row=0, column=0, sticky="w")
-    Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
+    Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="new")
+    
+    frameEventBoxCenter.grid_columnconfigure(0, weight=1)
+    frameEventBoxCenter.grid_columnconfigure(1, weight=1)
+    frameEventBoxCenter.grid_columnconfigure(2, weight=1)
+
+    frameTimer.grid_columnconfigure(0, weight=1)
+    frameTimer.grid_columnconfigure(1, weight=1)
+    frameTimer.grid_columnconfigure(2, weight=1)
 
 
     window.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -66,7 +74,7 @@ def player_action_screen(players, event_queue):
             playerName = player['codename']
             
             if team == 'red_users':    
-                # prevent overfill and go ovr to new column
+                # prevent overfill and go over to new column
                 if redRowNum == 8:
                     redColNum += 1
                     redRowNum = 1
@@ -74,7 +82,7 @@ def player_action_screen(players, event_queue):
                 Label(frameRed, text=playerName, fg="red", font=helveticaSmall, padx=player_border_width, pady=player_border_width, bg="black").grid(row=redRowNum, column=redColNum, sticky="w")
                 redRowNum += 1
             else:
-                # prevent overfill and go ovr to new column
+                # prevent overfill and go over to new column
                 if greenRowNum == 8:
                     greenColNum += 1
                     greenRowNum = 1
@@ -98,13 +106,17 @@ def player_action_screen(players, event_queue):
         event_list.append(event_string)
         for widget in frameEventBoxCenter.winfo_children():
             widget.destroy()
-        Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0 , column=1, sticky="n")
+        Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
         
         # adjust the size of the event_list based on overflow
-        if len(event_list) > 3:
-            event_list.clear()
-
-        #render the labels for each of the events based on the items in event_list
+        if len(event_list) > 8:    
+            event_list.pop(0)
+        
+        ## render the labels for each of the events based on the items in event_list
+        for i in range(len(event_list)):
+            codename_one = event_list[i].split(" hit ")[0]
+            point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
+            Label(frameEventBoxCenter, text=event_list[i], bg="black", font=helveticaBig, fg=point_color).grid(row=i+1, column=1, sticky="n")
 
         window.update()
         
@@ -120,7 +132,7 @@ def player_action_screen(players, event_queue):
             #filtering all_players for items with selected id, then selecting codename   
             codename_one = list(filter(lambda player: str(player["id"]) == event_data[0], all_players))[0]["codename"]
             codename_two = list(filter(lambda player: str(player["id"]) == event_data[1], all_players))[0]["codename"]
-
+            
             event_string = codename_one + " hit " + codename_two
 
             #TODO: Remove this when you're adding the events to the screen
