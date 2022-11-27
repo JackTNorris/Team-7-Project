@@ -133,8 +133,6 @@ def player_action_screen(players, event_queue):
             codename_one = list(filter(lambda player: str(player["id"]) == event_data[0], all_players))[0]["codename"]
             codename_two = list(filter(lambda player: str(player["id"]) == event_data[1], all_players))[0]["codename"]
             
-            #point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
-
             event_string = codename_one + " hit " + codename_two
 
             #TODO: Remove this when you're adding the events to the screen
