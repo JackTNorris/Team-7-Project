@@ -74,7 +74,7 @@ def player_action_screen(players, event_queue):
             playerName = player['codename']
             
             if team == 'red_users':    
-                # prevent overfill and go ovr to new column
+                # prevent overfill and go over to new column
                 if redRowNum == 8:
                     redColNum += 1
                     redRowNum = 1
@@ -82,7 +82,7 @@ def player_action_screen(players, event_queue):
                 Label(frameRed, text=playerName, fg="red", font=helveticaSmall, padx=player_border_width, pady=player_border_width, bg="black").grid(row=redRowNum, column=redColNum, sticky="w")
                 redRowNum += 1
             else:
-                # prevent overfill and go ovr to new column
+                # prevent overfill and go over to new column
                 if greenRowNum == 8:
                     greenColNum += 1
                     greenRowNum = 1
@@ -122,41 +122,6 @@ def player_action_screen(players, event_queue):
             point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
             Label(frameEventBoxCenter, text=event_list[i], bg="black", font=helveticaBig, fg=point_color).grid(row=i+1, column=1, sticky="n")
 
-
-        # render event labels for red side
-        """
-        for i in range(len(event_list)):
-            for team in players:
-                for player in players[team]:
-                    playerName = player['codename']
-                    if team == 'red_users':    
-                        # check if name exists in team
-                        if playerName == (event_list[i].split(" "))[0]:
-                            if(len(redLabels) > maxSize):
-
-                                # scrolling effect
-                                for i in range(len(redLabels)):
-                                    if(i != len(redLabels) - 1):
-                                        redLabels[i].destroy()
-                                        redLabels[i] = redLabels[i+1]
-
-                            redLabels.append(Label(frameEventBoxLeft, text=event_list[i], bg="black", font=helveticaBig, fg="red").grid(row=i, column=1, sticky='n'))
-        """
-        # render event labels for green side
-        """
-        for i in range(len(event_list)):
-            for team in players:
-                for player in players[team]:
-                    playerName = player['codename']
-                    if team == 'green_users':    
-                        # check if name exists in team
-                        if playerName == (event_list[i].split(" "))[0]:
-                            if(len(greenLabels) > maxSize):
-                                label = greenLabels.pop(0)
-                                label.destroy()
-
-                            greenLabels.append(Label(frameEventBoxRight, text=event_list[i], bg="black", font=helveticaBig, fg="green").grid(row=i, column=1, sticky='n'))
-        """
         window.update()
         
     
