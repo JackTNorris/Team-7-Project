@@ -159,11 +159,11 @@ def player_action_screen(players, event_queue):
     def flash_score(score_label, score_color):
         def flash_high_score():
             current_color = score_label.cget("fg")
-            print("current color is: " + current_color)
             next_color = score_color if current_color != score_color else "white"
             score_label.config(fg=next_color)
+            frameEventBoxLeft.after(200, flash_high_score) if score_color == "red" else frameEventBoxRight.after(200, flash_high_score)
             window.update()
-        frameEventBoxLeft.after(200, flash_high_score) if score_color == "red" else frameEventBoxRight.after(200, flash_high_score)
+        flash_high_score()
 
 
 
@@ -191,8 +191,6 @@ def player_action_screen(players, event_queue):
                 green_score += 10
             
             update_scores()
-            #TODO: Remove this when you're adding the events to the screen
-            print(event_string)
 
             add_events_to_window(event_string)
             q.task_done()
