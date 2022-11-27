@@ -124,12 +124,17 @@ def player_input_screen():
                             entry_widget.delete(0, END)
                         else:
                             codename = entry_widget.get()
-                            if entry_widget == red_player_inputs[i][j]:
-                                red_users.append({"id": player_id, "codename": codename})
-                            if entry_widget == green_player_inputs[i][j]:
-                                green_users.append({"id": player_id, "codename": codename})                           
-                            add_user(corr_id_entry_val, entry_widget.get())
-                            next_id_entry(corr_id_entry).focus_set()
+                            if(codename == ""):
+                                toast.showinfo("Invalid Op", "Please enter in a codename")
+                                entry_widget.delete(0, END)
+                                corr_id_entry.delete(0, END)
+                            else:
+                                if entry_widget == red_player_inputs[i][j] and codename:
+                                    red_users.append({"id": player_id, "codename": codename})
+                                if entry_widget == green_player_inputs[i][j]:
+                                    green_users.append({"id": player_id, "codename": codename})                           
+                                add_user(corr_id_entry_val, entry_widget.get())
+                                next_id_entry(corr_id_entry).focus_set()
 
     def close_window(e):
         window.destroy()

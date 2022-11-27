@@ -11,6 +11,8 @@ import threading
 player_border_width = 10
 frame_border_width = 20
 warning_timer_seconds = 6 * 60
+green_score = 0
+red_score = 0
 
 #This creates the main window of an application
 def player_action_screen(players, event_queue):
@@ -19,10 +21,9 @@ def player_action_screen(players, event_queue):
     window.title("Join")
     window.geometry("1280x720")
     window.configure(background='grey')
-
     helveticaBig = Font(family='Helvetica', size=20, weight='bold')
     helveticaSmall = Font(family='Helvetica', size=10, weight='bold')
-    
+    helveticaHuge = Font(family='Helvetica', size=30, weight='bold')
     window.configure(bg = "black")
 
     player_frame_heights = 720 / 2
@@ -46,6 +47,21 @@ def player_action_screen(players, event_queue):
     Label(frameGreen, text="GREEN TEAM", bg="black", font=helveticaBig, fg="green").grid(row=0, column=0, sticky="w")
     Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="new")
     
+    frameEventBoxLeft.grid_columnconfigure(0, weight=1)
+    frameEventBoxLeft.grid_columnconfigure(1, weight=1)
+    frameEventBoxLeft.grid_columnconfigure(2, weight=1)
+    frameEventBoxLeft.grid_rowconfigure(0, weight=1)
+    frameEventBoxLeft.grid_rowconfigure(1, weight=1)
+    frameEventBoxLeft.grid_rowconfigure(2, weight=1)
+
+
+    frameEventBoxRight.grid_columnconfigure(0, weight=1)
+    frameEventBoxRight.grid_columnconfigure(1, weight=1)
+    frameEventBoxRight.grid_columnconfigure(2, weight=1)
+    frameEventBoxRight.grid_rowconfigure(0, weight=1)
+    frameEventBoxRight.grid_rowconfigure(1, weight=1)
+    frameEventBoxRight.grid_rowconfigure(2, weight=1)
+
     frameEventBoxCenter.grid_columnconfigure(0, weight=1)
     frameEventBoxCenter.grid_columnconfigure(1, weight=1)
     frameEventBoxCenter.grid_columnconfigure(2, weight=1)
@@ -60,6 +76,9 @@ def player_action_screen(players, event_queue):
     window.grid_columnconfigure(2, weight=1, uniform="group1")
     window.grid_rowconfigure(0, weight=1)
     window.grid_rowconfigure(1, weight=1)
+
+    Label(frameEventBoxLeft, text=red_score, bg="black", font="Helvetica 50", fg="red").grid(row=1, column=1, sticky="new")
+    Label(frameEventBoxRight, text=green_score, bg="black", font="Helvetica 50", fg="green").grid(row=1, column=1, sticky="new")
 
     #'''
     for team in players:
@@ -117,11 +136,40 @@ def player_action_screen(players, event_queue):
             codename_one = event_list[i].split(" hit ")[0]
             point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
             Label(frameEventBoxCenter, text=event_list[i], bg="black", font=helveticaBig, fg=point_color).grid(row=i+1, column=1, sticky="n")
-
-        window.update()
         
-    
+        window.update()
+
+    def update_scores():
+        global green_score
+        global red_score
+        #clear red score
+        for widget in frameEventBoxLeft.winfo_children():
+            widget.destroy()
+        #clear green score
+        for widget in frameEventBoxLeft.winfo_children():
+            widget.destroy()
+        red_score_label = Label(frameEventBoxLeft, text=red_score, bg="black", font="Helvetica 50", fg="red")
+        red_score_label.grid(row=1, column=1, sticky="new")
+        green_score_label = Label(frameEventBoxRight, text=green_score, bg="black", font="Helvetica 50", fg="green")
+        green_score_label.grid(row=1, column=1, sticky="new")
+
+        if red_score != green_score:
+            flash_score(red_score_label if (red_score > green_score) else green_score_label, "red" if (red_score > green_score) else "green")
+
+    def flash_score(score_label, score_color):
+        def flash_high_score():
+            current_color = score_label.cget("fg")
+            next_color = score_color if current_color != score_color else "white"
+            score_label.config(fg=next_color)
+            frameEventBoxLeft.after(200, flash_high_score) if score_color == "red" else frameEventBoxRight.after(200, flash_high_score)
+            window.update()
+        flash_high_score()
+
+
+
     def listen_for_events(q):
+        global green_score
+        global red_score
         while True:
             #splitting "4:1" into "[4, 1]"
             event_data = q.get().split(":")
@@ -135,8 +183,14 @@ def player_action_screen(players, event_queue):
             
             event_string = codename_one + " hit " + codename_two
 
-            #TODO: Remove this when you're adding the events to the screen
-            print(event_string)
+            point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
+
+            if point_color == "red":
+                red_score += 10
+            else:
+                green_score += 10
+            
+            update_scores()
 
             add_events_to_window(event_string)
             q.task_done()
