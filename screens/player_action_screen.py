@@ -44,7 +44,15 @@ def player_action_screen(players, event_queue):
 
     Label(frameRed, text="RED TEAM", bg="black", font=helveticaBig, fg="red").grid(row=0, column=0, sticky="e")
     Label(frameGreen, text="GREEN TEAM", bg="black", font=helveticaBig, fg="green").grid(row=0, column=0, sticky="w")
-    Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
+    Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="new")
+    
+    frameEventBoxCenter.grid_columnconfigure(0, weight=1)
+    frameEventBoxCenter.grid_columnconfigure(1, weight=1)
+    frameEventBoxCenter.grid_columnconfigure(2, weight=1)
+
+    frameTimer.grid_columnconfigure(0, weight=1)
+    frameTimer.grid_columnconfigure(1, weight=1)
+    frameTimer.grid_columnconfigure(2, weight=1)
 
 
     window.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -101,10 +109,22 @@ def player_action_screen(players, event_queue):
         Label(frameEventBoxCenter, text="EVENT WINDOW", bg="black", font=helveticaBig, fg="white").grid(row=0, column=1, sticky="n")
         
         # adjust the size of the event_list based on overflow
-        if len(event_list) > 15:    
-            event_list.clear()
+        if len(event_list) > 8:    
+            event_list.pop(0)
 
-        #render the labels for each of the events based on the items in event_list
+        # maxSize = 5
+        # redLabels = []
+        # greenLabels = []
+        
+        ## render the labels for each of the events based on the items in event_list
+        for i in range(len(event_list)):
+            codename_one = event_list[i].split(" hit ")[0]
+            point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
+            Label(frameEventBoxCenter, text=event_list[i], bg="black", font=helveticaBig, fg=point_color).grid(row=i+1, column=1, sticky="n")
+
+
+        # render event labels for red side
+        """
         for i in range(len(event_list)):
             for team in players:
                 for player in players[team]:
@@ -112,8 +132,18 @@ def player_action_screen(players, event_queue):
                     if team == 'red_users':    
                         # check if name exists in team
                         if playerName == (event_list[i].split(" "))[0]:
-                            Label(frameEventBoxLeft, text=event_list[i], bg="black", font=helveticaBig, fg="red").grid(row=i, column=1, sticky='n')
+                            if(len(redLabels) > maxSize):
 
+                                # scrolling effect
+                                for i in range(len(redLabels)):
+                                    if(i != len(redLabels) - 1):
+                                        redLabels[i].destroy()
+                                        redLabels[i] = redLabels[i+1]
+
+                            redLabels.append(Label(frameEventBoxLeft, text=event_list[i], bg="black", font=helveticaBig, fg="red").grid(row=i, column=1, sticky='n'))
+        """
+        # render event labels for green side
+        """
         for i in range(len(event_list)):
             for team in players:
                 for player in players[team]:
@@ -121,8 +151,12 @@ def player_action_screen(players, event_queue):
                     if team == 'green_users':    
                         # check if name exists in team
                         if playerName == (event_list[i].split(" "))[0]:
-                            Label(frameEventBoxRight, text=event_list[i], bg="black", font=helveticaBig, fg="green").grid(row=i, column=1, sticky='n')
-                            
+                            if(len(greenLabels) > maxSize):
+                                label = greenLabels.pop(0)
+                                label.destroy()
+
+                            greenLabels.append(Label(frameEventBoxRight, text=event_list[i], bg="black", font=helveticaBig, fg="green").grid(row=i, column=1, sticky='n'))
+        """
         window.update()
         
     
@@ -137,6 +171,9 @@ def player_action_screen(players, event_queue):
             #filtering all_players for items with selected id, then selecting codename   
             codename_one = list(filter(lambda player: str(player["id"]) == event_data[0], all_players))[0]["codename"]
             codename_two = list(filter(lambda player: str(player["id"]) == event_data[1], all_players))[0]["codename"]
+            
+            #point_color =  "red" if len(list(filter(lambda player: player["codename"] == codename_one, players["red_users"]))) > 0 else "green"
+
 
             event_string = codename_one + " hit " + codename_two
 
